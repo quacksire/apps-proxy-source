@@ -1,5 +1,6 @@
 name = "apps-proxy-source"
 main = "src/worker.js"
+account_id = "46560285c6da2e4dbfb619ffea59e297"
 compatibility_date = "2023-11-08"
 usage_model = "unbound"
 env = { }
