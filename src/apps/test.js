@@ -1,50 +1,61 @@
-export default async function TestApp(url, metadata) {
-	if (!url) url = "/"
-	// url = App URL
-	// metadata.url =  Full URL
-	//
-	/*
-	* let metadata = {
-		url: url,
-		host: queryParameters.get("host") || "apps-proxy-source.quacksire.workers.dev",
-		cucmPhone: queryParameters.get("x-ciscoipphonemodelname") || "N/A"
+import {App} from "../lib/app_scheme";
+
+export class TestApp extends App {
+	// Now we can set the app metadata
+	static name = "TestApp"
+	static description = "This is a test app"
+	static version = "1.0"
+	static author = "Quacksire"
+	static path = "test"
+	rootURL = ''
+
+	/**
+	 * @name TestApp
+	 * @param url {string} - The URL path of the app
+	 * @param metadata {object} - The metadata of the request
+	 * @param metadata.url {URL} - The URL of the request
+	 * @param metadata.host {string} - The host of the request
+	 * @param metadata.cucmPhone {string} - The model name of the phone
+	 * @returns {string}
+	 * @constructor
+	 */
+	static async app(url, metadata) {
+		this.setRootURL(metadata.host)
+
+
+		// This switch statement is the page router, it will route the app to the correct page
+		switch (url) { // Page Router
+
+
+			case `${this.path}`: // Home Page
+				return this.TextScreen("TestApp", `This is a test app. Your ${metadata.cucmPhone} is pretty goofy`, [
+					{
+						name: "Credits",
+						url: `${this.rootURL}/credits`,
+						position: 4
+					},
+					{
+						name: "back to app list",
+						url: `${metadata.host}`,
+						position: 1
+					}
+				])
+
+
+			case `${this.path}/credits`: // Credits Page
+				return this.showCredits(this.rootURL)
+
+
+			default: // 404 Page
+				return this.TextScreen("404", "This page does not exist", [
+					{
+						name: "< back to home",
+						url: `${this.rootURL}`,
+						position: 1
+					}
+				])
+
+
+		}
 	}
-	*
-	* */
-
-
-	return `
-  <CiscoIPPhoneIconFileMenu>
-<Title IconIndex="2">Conference List</Title>
-<IconItem>
-<Index>1</Index>
-<URL>Resource:Icon.SecureCall</URL>
-</IconItem>
-<IconItem>
-<Index>2</Index>
-<URL>Resource:Icon.Connected</URL>
-</IconItem>
-<IconItem>
-<Index>3</Index>
-<URL>Resource:AnimatedIcon.Ringin</URL>
-</IconItem>
-<MenuItem>
-<Name>Schmo, Joe</Name>
-<IconIndex>1</IconIndex>
-<URL>http://192.168.1.12:8080/details?user=jschmo</URL>
-</MenuItem>
-<MenuItem>
-<Name>Blow, Joe</Name>
-<IconIndex>2</IconIndex>
-<URL>http://192.168.1.12:8080/details?user=jblow</URL>
-</MenuItem>
-<MenuItem>
-<Name>Joining, Just Now</Name>
-<IconIndex>3</IconIndex>
-<URL>http://192.168.1.12:8080/details?user=jjoining</URL>
-</MenuItem>
-</CiscoIPPhoneIconFileMenu>
-  `;
-
-
 }

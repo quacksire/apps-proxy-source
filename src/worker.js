@@ -5,15 +5,17 @@
  * I have a proxy set on their network to forward their requests so that
  * I can use Cloudflare Workers
  *
- * Apps are in the /apps/ dir of this project
- * * When adding an app, clone one of the files in that dir
- *    then modify it to your liking or purpose
- *     then import it like the examples on lines #29-30 in this file
- *      then add the desired path of the app to the conditional on line #46, following the standard that is already set
- *        profit?
+ *  * Apps are in the `src/apps/` dir of this project
  *
- * CUCM IPPS Response Docs: https://ducks.win/cucm-phone-docs
+ *  When adding an app:
+ * 1. clone one of the files in that dir
+ * 2. Modify it to your liking or purpose
+ * 3. Import it like the examples on [lines #29-30]{@link worker.js:L29} in this file
+ * 4. Add the desired path of the app to the conditional on line #46, following the standard that is already set
+ * 5. profit?
  *
+ * {@link https://ducks.win/cucm-phone-docs CUCM IPPS Response Docs}
+ * {@author https://quacksire.dev}
  *
  */
 
@@ -21,17 +23,18 @@
 
 
 import { default as TriviaApp } from '../src/apps/trivia'
-import { default as TestApp} from '../src/apps/test'
 
+// TODO: #9 - Import your app here
+import { TestApp } from './apps/test'
 export default {
 	async fetch(request, env, ctx) {
-		const { pathname } = new URL(request.url);
+		const { pathname, host } = new URL(request.url);
 		const url = new URL(request.url);
 		const queryParameters = url.searchParams;
 
 		let metadata = {
 			url: url,
-			host: queryParameters.get("host") || "apps-proxy-source.quacksire.workers.dev",
+			host: queryParameters.get("host") || host || "apps-proxy-source.quacksire.workers.dev",
 			cucmPhone: queryParameters.get("x-ciscoipphonemodelname") || "N/A"
 		}
 
@@ -41,8 +44,11 @@ export default {
 			let appDir = pathname.split('/app/')[1]
 
 			// appDir.startsWith("appName")
-			if (appDir.startsWith('test')) {
-				appRes = await TestApp(pathname.split('/app/')[1], metadata)
+
+
+			// TODO: #10 - Copy this conditional, and change it with what you made. IDEs like VSCode will aid you with intelliSense
+			if (appDir.startsWith(TestApp.path)) {
+				appRes = await TestApp.app(appDir, metadata)
 			}
 
 			if (appDir.startsWith('trivia')) {
@@ -67,7 +73,7 @@ export default {
 		}
 
 
-		if (pathname === '/main.xml') {
+		if (pathname === '/main.xml' || pathname === '/') {
 			return new Response(await getMainXML(metadata.host), {
 				headers: { 'Content-Type': 'text/xml' },
 			});
@@ -119,9 +125,6 @@ export default {
 };
 
 async function getMainXML(hostname) {
-
-
-
 	return `
     <CiscoIPPhoneMenu>
       <Title>Apps</Title>
