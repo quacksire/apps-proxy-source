@@ -16,7 +16,6 @@
  *
  *
  */
-const apiKey = "a7869c71-f8f3-48af-b48b-544abe3c4486"
 
 
 
