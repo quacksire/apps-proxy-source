@@ -1,0 +1,8 @@
+name = "apps-proxy-source"
+main = "src/worker.js"
+compatibility_date = "2023-11-08"
+usage_model = "unbound"
+env = { }
+
+[triggers]
+crons = [ ]
