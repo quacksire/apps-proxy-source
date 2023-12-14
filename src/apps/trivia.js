@@ -4,15 +4,10 @@ export class TriviaApp extends App {
 	// Now we can set the app metadata
 
 
-	//TODO: #3 Change this to the user facing name of your app
 	static name = "Trivia"
-	// TODO: #4 Change this to the description of your app
 	static description = "Test your knowledge with this trivia app."
-	// TODO: #5 Change this to the version of your app
 	static version = "1.0"
-	// TODO: #6 Change this to the author of your app
 	static author = "Quacksire"
-	// TODO: #7 Change this to the path of your app, like `trivia` or `map`
 	static path = "trivia"
 
 	// <no-touchy>
@@ -38,7 +33,6 @@ export class TriviaApp extends App {
 
 
 			case `${this.path}`: // Home Page
-				// TODO: #8 Make the app
 
 				/**
 				 * This is the home page of the app, it will be the first page the user sees when they select the app
@@ -76,13 +70,8 @@ export class TriviaApp extends App {
 			 */
 
 
-
-
-			// TODO: #8 Optional - Add more pages to your app, need to add a softkey or other type of link to get to/from it
 			case `${this.path}/credits`: // Credits Page
 				return this.showCredits(this.rootURL)
-
-
 			default: // 404 Page
 
 				if (url.includes('/game/')) {
@@ -167,8 +156,6 @@ export class TriviaApp extends App {
 							position: `${positions[index]}`
 						}
 					})
-
-
 					return this.TextScreen('Trivia', trivia.question, answersmapsXML)
 				} else {
 					// 404 Page
