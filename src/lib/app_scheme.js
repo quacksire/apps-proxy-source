@@ -52,16 +52,6 @@ export class App {
 				</MenuItem>
 			`
 		}).join('')}
-
-
-			<MenuItem>
-				<Name>Medium</Name>
-				<URL>http://${metadata.host}/app/trivia/game/medium</URL>
-			</MenuItem>
-			<MenuItem>
-				<Name>Hard</Name>
-				<URL>http://${metadata.host}/app/trivia/game/hard</URL>
-			</MenuItem>
 			${softkeys.length >= 0 && softkeys.map(key => {
 			return `
 				<SoftKeyItem>
