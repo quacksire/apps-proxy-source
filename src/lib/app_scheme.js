@@ -95,4 +95,10 @@ export class App {
 		this.rootURL = `http://${host}/app/${this.path}`
 	}
 
+	static waitforme(millisec) {
+		return new Promise(resolve => {
+			setTimeout(() => { resolve('') }, millisec);
+		})
+	}
+
 }
