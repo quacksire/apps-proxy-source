@@ -74,90 +74,6 @@ export class TriviaApp extends App {
 			/**
 			 * `this.TextScreen` is a function that will generate a CiscoIPPhoneText screen with a title, text, and enables use of soft keys
 			 */
-			case url.includes('/game/'): // Game Pages
-				/**
-				* /app/trivia/game/[difficulty] - question
-				* /app/trivia/game/[difficulty]/correct - correct answer screen with continue button and back to main menu button
-				* /app/trivia/game/[difficulty]/incorrect?correct_answer=[answer] - incorrect answer screen with correct answer and back to main menu button
-				 */
-				let difficulty = url.split('game/')[1].split('/')[0]
-				console.log(difficulty)
-
-
-				if (url.endsWith('correct')) {
-					return this.TextScreen(
-						"Correct!",
-						"You answered correctly!",
-						[
-							{
-								name: "Main Menu",
-								url: this.rootURL,
-								position: 1
-							},
-							{
-								name: "Next!",
-								url: this.rootURL + 'game/' + difficulty,
-								position: 4
-							}
-						])
-
-				}
-				if (url.endsWith('incorrect')) {
-					console.log(new URL(metadata.url).search)
-
-					return this.TextScreen(
-						"Incorrect",
-						"You answered incorrectly. The correct answer was " + new URL(metadata.url).searchParams.get('answer'),
-						[
-							{
-								name: "Main Menu",
-								url: this.rootURL,
-								position: 1
-							},
-							{
-								name: "Next!",
-								url: this.rootURL + 'game/' + difficulty,
-								position: 4
-							}
-						])
-				}
-
-
-				let triviaURL = `https://opentdb.com/api.php?amount=1&category=18&type=multiple`
-				let triviaResponse = await fetch(triviaURL)
-				let trivia = (await triviaResponse.json()).results[0]
-				/**
-				 * Object {
-				 *   type: string,
-				 *   difficulty: string,
-				 *   category: string,
-				 *   question: string,
-				 *   correct_answer: string
-				 *   incorrect_answers: Array [String]
-				 * }
-				 */
-
-
-				let positions = [1, 2, 3, 4]
-				// shuffle positions in a random order
-				positions = positions.sort(() => Math.random() - 0.5)
-
-				let triviaAnswers = trivia.incorrect_answers
-				triviaAnswers.push(trivia.correct_answer)
-				// shuffle answers in a random order
-				triviaAnswers = triviaAnswers.sort(() => Math.random() - 0.5)
-
-				// create a map of position to answer
-				let answersmapsXML = triviaAnswers.map((answer, index) => {
-					return {
-						name: `${answer}`,
-						url: `${this.rootURL}/game/${difficulty}/${answer === trivia.correct_answer ? 'correct' : 'incorrect'}`,
-						position: `${positions[index]}`
-					}
-				})
-
-
-				return this.TextScreen('Trivia', trivia.question, answersmapsXML)
 
 
 
@@ -168,13 +84,102 @@ export class TriviaApp extends App {
 
 
 			default: // 404 Page
-				return this.TextScreen("404", "This page does not exist", [
-					{
-						name: "Back",
-						url: `${this.rootURL}`,
-						position: 1
+
+				if (url.includes('/game/')) {
+					// Game Pages
+					/**
+					 * /app/trivia/game/[difficulty] - question
+					 * /app/trivia/game/[difficulty]/correct - correct answer screen with continue button and back to main menu button
+					 * /app/trivia/game/[difficulty]/incorrect?correct_answer=[answer] - incorrect answer screen with correct answer and back to main menu button
+					 */
+					let difficulty = url.split('game/')[1].split('/')[0]
+					console.log(difficulty)
+
+
+					if (url.endsWith('correct')) {
+						return this.TextScreen(
+							"Correct!",
+							"You answered correctly!",
+							[
+								{
+									name: "Main Menu",
+									url: this.rootURL,
+									position: 1
+								},
+								{
+									name: "Next!",
+									url: this.rootURL + 'game/' + difficulty,
+									position: 4
+								}
+							])
+
 					}
-				])
+					if (url.endsWith('incorrect')) {
+						console.log(new URL(metadata.url).search)
+
+						return this.TextScreen(
+							"Incorrect",
+							"You answered incorrectly. The correct answer was " + new URL(metadata.url).searchParams.get('answer'),
+							[
+								{
+									name: "Main Menu",
+									url: this.rootURL,
+									position: 1
+								},
+								{
+									name: "Next!",
+									url: this.rootURL + 'game/' + difficulty,
+									position: 4
+								}
+							])
+					}
+
+
+					let triviaURL = `https://opentdb.com/api.php?amount=1&category=18&type=multiple`
+					let triviaResponse = await fetch(triviaURL)
+					let trivia = (await triviaResponse.json()).results[0]
+					/**
+					 * Object {
+					 *   type: string,
+					 *   difficulty: string,
+					 *   category: string,
+					 *   question: string,
+					 *   correct_answer: string
+					 *   incorrect_answers: Array [String]
+					 * }
+					 */
+
+
+					let positions = [1, 2, 3, 4]
+					// shuffle positions in a random order
+					positions = positions.sort(() => Math.random() - 0.5)
+
+					let triviaAnswers = trivia.incorrect_answers
+					triviaAnswers.push(trivia.correct_answer)
+					// shuffle answers in a random order
+					triviaAnswers = triviaAnswers.sort(() => Math.random() - 0.5)
+
+					// create a map of position to answer
+					let answersmapsXML = triviaAnswers.map((answer, index) => {
+						return {
+							name: `${answer}`,
+							url: `${this.rootURL}/game/${difficulty}/${answer === trivia.correct_answer ? 'correct' : 'incorrect'}`,
+							position: `${positions[index]}`
+						}
+					})
+
+
+					return this.TextScreen('Trivia', trivia.question, answersmapsXML)
+				} else {
+					// 404 Page
+					return this.TextScreen("404", "This page does not exist", [
+						{
+							name: "Back",
+							url: `${metadata.host}`,
+							position: 1
+						}
+					])
+				}
 		}
 	}
 }
