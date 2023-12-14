@@ -27,7 +27,7 @@ export default async function TriviaApp(url, metadata) {
 				Developed by Quacksire (sam@quacksire.dev)
 			</Text>
 			<SoftKeyItem>
-				<Name> < Back</Name>
+				<Name>Back</Name>
 				<URL>${rootURL}</URL>
 				<Position>1</Position>
 			</SoftKeyItem>
