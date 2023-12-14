@@ -33,8 +33,8 @@ export class TestApp extends App {
 				<Text>This object has one softkey named "Custom"</Text>
 				<SoftKeyItem>
 				<Name>Custom</Name>
-				<URL>http://someserver/somepage</URL>
-				<Position>4</Position>
+				<URL>${this.rootURL}/credits</URL>
+				<Position>1</Position>
 				</SoftKeyItem>
 				</CiscoIPPhoneText>
 				`
