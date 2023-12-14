@@ -84,8 +84,11 @@ export class TriviaApp extends App {
 					let difficulty = url.split('game/')[1].split('/')[0]
 					console.log(difficulty)
 
+					console.log(url)
 
-					if (url.endsWith('correct')) {
+
+
+					if (url === `trivia/game/${difficulty}/correct`) {
 						return this.TextScreen(
 							"Correct!",
 							"You answered correctly!",
@@ -97,13 +100,13 @@ export class TriviaApp extends App {
 								},
 								{
 									name: "Next!",
-									url: this.rootURL + 'game/' + difficulty,
+									url: this.rootURL + '/game/' + difficulty,
 									position: 4
 								}
 							])
 
 					}
-					if (url.endsWith('incorrect')) {
+					if (url === `trivia/game/${difficulty}/incorrect`) {
 						console.log(new URL(metadata.url).search)
 
 						return this.TextScreen(
@@ -117,7 +120,7 @@ export class TriviaApp extends App {
 								},
 								{
 									name: "Next!",
-									url: this.rootURL + 'game/' + difficulty,
+									url: this.rootURL + '/game/' + difficulty,
 									position: 4
 								}
 							])
@@ -152,7 +155,7 @@ export class TriviaApp extends App {
 					let answersmapsXML = triviaAnswers.map((answer, index) => {
 						return {
 							name: `${answer}`,
-							url: `${this.rootURL}/game/${difficulty}/${answer === trivia.correct_answer ? 'correct' : 'incorrect'}`,
+							url: `${this.rootURL}/game/${difficulty}/${answer === trivia.correct_answer ? 'correct' : 'incorrect?answer=' + trivia.correct_answer}`,
 							position: `${positions[index]}`
 						}
 					})
