@@ -1,3 +1,171 @@
+import {App} from "../lib/app_scheme";
+
+export class TriviaApp extends App {
+	// Now we can set the app metadata
+
+
+	//TODO: #3 Change this to the user facing name of your app
+	static name = "Trivia"
+	// TODO: #4 Change this to the description of your app
+	static description = "Test your knowledge with this trivia app."
+	// TODO: #5 Change this to the version of your app
+	static version = "1.0"
+	// TODO: #6 Change this to the author of your app
+	static author = "Quacksire"
+	// TODO: #7 Change this to the path of your app, like `trivia` or `map`
+	static path = "trivia"
+
+	// <no-touchy>
+	rootURL = ''
+	// </no-touchy>
+
+
+	/**
+	 * @param url {string} - The URL path of the app
+	 * @param metadata {object} - The metadata of the request
+	 * @param metadata.url {URL} - The URL of the request
+	 * @param metadata.host {string} - The host of the request
+	 * @param metadata.cucmPhone {string} - The model name of the phone
+	 * @returns {string}
+	 * @constructor
+	 */
+	static async app(url, metadata) {
+		this.setRootURL(metadata.host)
+
+
+		// This switch statement is the page router, it will route the app to the correct page
+		switch (url) { // Page Router
+
+
+			case `${this.path}`: // Home Page
+				// TODO: #8 Make the app
+
+				/**
+				 * This is the home page of the app, it will be the first page the user sees when they select the app
+				 * Make sure you maintain the indentation, it will make it easier to read and debug
+				 */
+
+				return this.MenuScreen("Trivia", "Choose a difficulty", [
+					{
+						name: "Easy",
+						url: `${this.rootURL}/game/easy`
+					},
+					{
+						name: "Medium",
+						url: `${this.rootURL}/game/medium`
+					},
+					{
+						name: "Hard",
+						url: `${this.rootURL}/game/hard`
+					}
+				], [
+					{
+						name: "Credits",
+						url: `${this.rootURL}/credits`,
+						position: 4
+					},
+					{
+						name: "Home",
+						url: `http://${metadata.host}`,
+						position: 1
+					}
+				])
+
+			/**
+			 * `this.TextScreen` is a function that will generate a CiscoIPPhoneText screen with a title, text, and enables use of soft keys
+			 */
+			case url.includes('/game/'): // Credits Page
+				let difficulty = url.split('game/')[1].split('/')[0]
+				console.log(difficulty)
+
+
+				if (url.endsWith('correct')) {
+					return this.TextScreen(
+						"Correct!",
+						"You answered correctly!",
+						[
+							{
+								name: "Main Menu",
+								url: this.rootURL,
+								position: 1
+							},
+							{
+								name: "Next!",
+								url: this.rootURL + 'game/' + difficulty,
+								position: 4
+							}
+						])
+
+				}
+				if (url.endsWith('incorrect')) {
+					console.log(new URL(metadata.url).search)
+
+					return this.TextScreen(
+						"Incorrect",
+						"You answered incorrectly. The correct answer was " + new URL(metadata.url).searchParams.get('answer'),
+						[
+							{
+								name: "Main Menu",
+								url: this.rootURL,
+								position: 1
+							},
+							{
+								name: "Next!",
+								url: this.rootURL + 'game/' + difficulty,
+								position: 4
+							}
+						])
+				}
+
+
+				let triviaURL = `https://opentdb.com/api.php?amount=1&category=18&type=multiple`
+				let triviaResponse = await fetch(triviaURL)
+				let trivia = (await triviaResponse.json()).results[0]
+
+				let positions = [1, 2, 3, 4]
+				// shuffle positions in a random order
+				positions = positions.sort(() => Math.random() - 0.5)
+
+				let triviaAnswers = trivia.incorrect_answers
+				triviaAnswers.push(trivia.correct_answer)
+				// shuffle answers in a random order
+				triviaAnswers = triviaAnswers.sort(() => Math.random() - 0.5)
+
+				// create a map of position to answer
+				let answersmapsXML = triviaAnswers.map((answer, index) => {
+					return {
+						name: `${answer}`,
+						url: `${this.rootURL}/game/${difficulty}/${answer === trivia.correct_answer ? 'correct' : 'incorrect'}`,
+						position: `${positions[index]}`
+					}
+				})
+
+
+				return this.TextScreen('Trivia', trivia.question, answersmapsXML)
+
+
+
+
+			// TODO: #8 Optional - Add more pages to your app, need to add a softkey or other type of link to get to/from it
+			case `${this.path}/credits`: // Credits Page
+				return this.showCredits(this.rootURL)
+
+
+			default: // 404 Page
+				return this.TextScreen("404", "This page does not exist", [
+					{
+						name: "Back",
+						url: `${this.rootURL}`,
+						position: 1
+					}
+				])
+		}
+	}
+}
+
+
+
+
 export default async function TriviaApp(url, metadata) {
 	if (!url) url = "/"
 	const rootURL = `http://${metadata.host}/app/trivia/`
@@ -13,7 +181,7 @@ export default async function TriviaApp(url, metadata) {
 		cucmPhone: queryParameters.get("x-ciscoipphonemodelname") || "N/A"
 	}
 	*
-	* */
+	*
 
 	console.log(url, metadata)
 
@@ -29,86 +197,7 @@ export default async function TriviaApp(url, metadata) {
 		</CiscoIPPhoneText>`
 	}
 
-	/**
-	 * @name TextScreen
-	 * @description Generates an CiscoIPPhoneText screen with a title, text, and softkeys
-	 * @param title {string}
-	 * @param text {string}
-	 * @param keys {Array<{name: string, url: string, position: number}>
-	 * @returns {string}
-	 * @constructor
-	 */
-	function TextScreen(title, text, keys) {
-		return `
-		<CiscoIPPhoneText>
-			<Title>Trivia</Title>
-			<Prompt>${title}</Prompt>
-			<Text>
-				${text}
-			</Text>
-			${keys.map(key => {
-			return `
-				<SoftKeyItem>
-					<Name>${key.name}</Name>
-					<URL>${key.url}</URL>
-					<Position>${key.position}</Position>
-				</SoftKeyItem>
-				`
-		}).join('')}
-		</CiscoIPPhoneText>
-`
 
-	}
-
-
-
-
-	// http://${metadata.host}/app/test.xml
-	if (url === "credits") showCredits()
-
-	if (url === "/") {
-		return `
-		<CiscoIPPhoneMenu>
-			<Title>Trivia</Title>
-				<MenuItem>
-					<Name>Easy</Name>
-					<URL>http://${metadata.host}/app/trivia/game/easy</URL>
-				</MenuItem>
-				<MenuItem>
-					<Name>Medium</Name>
-					<URL>http://${metadata.host}/app/trivia/game/medium</URL>
-				</MenuItem>
-				<MenuItem>
-					<Name>Hard</Name>
-					<URL>http://${metadata.host}/app/trivia/game/hard</URL>
-				</MenuItem>
-				<SoftKeyItem>
-					<Name>Credits</Name>
-					<URL>http://${metadata.host}/app/trivia/credits</URL>
-					<Position>1</Position>
-				</SoftKeyItem>
-		</CiscoIPPhoneMenu>
-		`;
-	}
-	if (url === "start") {
-		// choose difficulty
-		return `
-		<CiscoIPPhoneMenu>
-			<Title>Trivia</Title>
-				<MenuItem>
-					<Name>Easy</Name>
-					<URL>http://${metadata.host}/app/trivia/game/easy</URL>
-				</MenuItem>
-				<MenuItem>
-					<Name>Medium</Name>
-					<URL>http://${metadata.host}/app/trivia/game/medium</URL>
-				</MenuItem>
-				<MenuItem>
-					<Name>Hard</Name>
-					<URL>http://${metadata.host}/app/trivia/game/hard</URL>
-				</MenuItem>
-		</CiscoIPPhoneMenu>
-		`;
 	}
 
 	/*
@@ -131,85 +220,6 @@ export default async function TriviaApp(url, metadata) {
 
 
 	if (url.startsWith('game')) {
-		let difficulty = url.split('game/')[1].split('/')[0]
-		console.log(difficulty)
-
-
-		if (url.endsWith('correct')) {
-			return TextScreen(
-				"Correct!",
-				"You answered correctly!",
-				[
-					{
-						name: "Main Menu",
-						url: rootURL,
-						position: 1
-					},
-					{
-						name: "Next!",
-						url: rootURL + 'game/' + difficulty,
-						position: 4
-					}
-				])
-
-		}
-		if (url.endsWith('incorrect')) {
-			console.log(new URL(metadata.url).search)
-
-			return TextScreen(
-				"Incorrect",
-				"You answered incorrectly. The correct answer was " + new URL(metadata.url).searchParams.get('answer'),
-				[
-					{
-						name: "Main Menu",
-						url: rootURL,
-						position: 1
-					},
-					{
-						name: "Next!",
-						url: rootURL + 'game/' + difficulty,
-						position: 4
-					}
-				])
-		}
-
-
-
-
-		let triviaURL = `https://opentdb.com/api.php?amount=1&category=18&type=multiple`
-		let triviaResponse = await fetch(triviaURL)
-		let trivia = (await triviaResponse.json()).results[0]
-
-		let positions = [1,2,3,4]
-		// shuffle positions in a random order
-		positions = positions.sort(() => Math.random() - 0.5)
-
-		let triviaAnswers = trivia.incorrect_answers
-		triviaAnswers.push(trivia.correct_answer)
-		// shuffle answers in a random order
-		triviaAnswers = triviaAnswers.sort(() => Math.random() - 0.5)
-
-		// create a map of position to answer
-		let answersmapsXML = triviaAnswers.map((answer, index) => {
-			return `
-			<SoftKeyItem>
-				<Name>${answer}</Name>
-				<URL>http://${metadata.host}/app/trivia/game/${difficulty}${answer === trivia.correct_answer ? '/correct' : '/incorrect?answer=' + encodeURI(trivia.correct_answer)}</URL>
-				<Position>${positions[index]}</Position>
-			</SoftKeyItem>
-			`
-		})
-
-
-
-		return `
-    <CiscoIPPhoneText>
-      <Title>Trivia</Title>
-      <Prompt>${trivia.question}</Prompt>
-      <Text>${trivia.correct_answer}</Text>
-      			${answersmapsXML.join('')}
-    </CiscoIPPhoneText>
-  `;
 
 	}
 

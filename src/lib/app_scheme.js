@@ -37,7 +37,41 @@ export class App {
 			}).join('')}
 			</CiscoIPPhoneText>
 `
+	}
 
+	static MenuScreen(prompt, title, items = [], softkeys = []) {
+		return `
+		<CiscoIPPhoneMenu>
+			<Title>Trivia</Title>
+			<Prompt>${title}</Prompt>
+			${items.length >= 0 && items.map(item => {
+			return `
+				<MenuItem>
+					<Name>${item.name}</Name>
+					<URL>${item.url}</URL>
+				</MenuItem>
+			`
+		}).join('')}
+
+
+			<MenuItem>
+				<Name>Medium</Name>
+				<URL>http://${metadata.host}/app/trivia/game/medium</URL>
+			</MenuItem>
+			<MenuItem>
+				<Name>Hard</Name>
+				<URL>http://${metadata.host}/app/trivia/game/hard</URL>
+			</MenuItem>
+			${softkeys.length >= 0 && softkeys.map(key => {
+			return `
+				<SoftKeyItem>
+				<Name>${key.name}</Name>
+				<URL>${key.url}</URL>
+				<Position>${key.position}</Position>
+				</SoftKeyItem>
+			`
+		}).join('')}
+		</CiscoIPPhoneMenu>`
 	}
 
 	/**
