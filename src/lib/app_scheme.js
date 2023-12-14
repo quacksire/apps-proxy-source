@@ -71,20 +71,19 @@ export class App {
 	 */
 	static showCredits(rootURL) {
 		return `
-		<CiscoIPPhoneText>
-			<Title>${this.name}</Title>
-			<Text>
-				Credits\n
-				--------\n
-				${this.description} v${this.version}\n
-				Developed by ${this.author}
-			</Text>
-			<SoftKeyItem>
-				<Name>Back</Name>
-				<URL>${rootURL}</URL>
-				<Position>1</Position>
-			</SoftKeyItem>
-		</CiscoIPPhoneText>`
+<CiscoIPPhoneText>
+<Title>Credits</Title>
+<Text>
+--------\n
+${this.description} v${this.version}\n
+Developed by ${this.author}
+</Text>
+<SoftKeyItem>
+<Name>Back</Name>
+<URL>${rootURL}</URL>
+<Position>1</Position>
+</SoftKeyItem>
+</CiscoIPPhoneText>`
 	}
 
 	/**
