@@ -23,14 +23,9 @@ export default async function TriviaApp(url, metadata) {
 		<CiscoIPPhoneText>
 			<Title>${name}</Title>
 			<Text>
-				${description}\n
+				${description}
 				Developed by Quacksire (sam@quacksire.dev)
 			</Text>
-			<SoftKeyItem>
-				<Name>Back</Name>
-				<URL>${rootURL}</URL>
-				<Position>1</Position>
-			</SoftKeyItem>
 		</CiscoIPPhoneText>`
 	}
 
