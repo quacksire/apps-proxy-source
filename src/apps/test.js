@@ -28,11 +28,6 @@ export class TestApp extends App {
 
 
 			case `${this.path}`: // Home Page
-				return `<CiscoIPPhoneText>
-				<Text>This object has one softkey named "Custom"</Text>
-				</CiscoIPPhoneText>
-				`
-
 				return this.TextScreen("TestApp", `This is a test app. Your ${metadata.cucmPhone} is pretty goofy`, [
 					{
 						name: "Credits",
@@ -54,8 +49,8 @@ export class TestApp extends App {
 			default: // 404 Page
 				return this.TextScreen("404", "This page does not exist", [
 					{
-						name: "back",
-						url: `${this.rootURL}`,
+						name: "Back",
+						url: `${metadata.host}`,
 						position: 1
 					}
 				])
