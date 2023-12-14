@@ -22,22 +22,18 @@ export class App {
 	 */
 	static TextScreen(title, text, keys = []) {
 		return `
-		<CiscoIPPhoneText>
+			<CiscoIPPhoneText>
 			<Title>${title}</Title>
-			<Prompt></Prompt>
-			<Text>
-				${text}
-			</Text>
 			${keys.length >= 0 && keys.map(key => {
 			return `
-				<SoftKeyItem>
-					<Name>${key.name}</Name>
-					<URL>${key.url}</URL>
-					<Position>${key.position}</Position>
-				</SoftKeyItem>
-				`
-		}).join('')}
-		</CiscoIPPhoneText>
+			<SoftKeyItem>
+			<Name>${key.name}</Name>
+			<URL>${key.url}</URL>
+			<Position>${key.position}</Position>
+			</SoftKeyItem>
+			`
+			}).join('')}
+			</CiscoIPPhoneText>
 `
 
 	}
