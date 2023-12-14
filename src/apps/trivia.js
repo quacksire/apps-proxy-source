@@ -66,7 +66,7 @@ export class TriviaApp extends App {
 					},
 					{
 						name: "back to app list",
-						url: `http://${metadata.host}/main.cml`,
+						url: `http://${metadata.host}/main.xml`,
 						position: 1
 					}
 				])
