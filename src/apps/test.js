@@ -37,11 +37,9 @@ export class TestApp extends App {
 					{
 						name: "credits",
 						url: `${this.rootURL}/credits`,
-						position: 2
+						position: 4
 					}
 				])
-
-
 			case `${this.path}/credits`: // Credits Page
 				return this.showCredits(this.rootURL)
 

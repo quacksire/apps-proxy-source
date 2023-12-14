@@ -136,7 +136,7 @@ async function getMainXML(hostname) {
     	</MenuItem>
 			<MenuItem>
 				<Name>Trivia</Name>
-				<URL>http://${hostname}/app/trivia.xml</URL>
+				<URL>http://${hostname}/app/trivia</URL>
 				<IconIndex>2</IconIndex>
 			</MenuItem>
     </CiscoIPPhoneMenu>

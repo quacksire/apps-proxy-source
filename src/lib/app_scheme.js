@@ -56,25 +56,12 @@ export class App {
 				Developed by ${this.author}
 			</Text>
 			<SoftKeyItem>
-				<Name>Home</Name>
+				<Name>Back</Name>
 				<URL>${rootURL}</URL>
 				<Position>1</Position>
 			</SoftKeyItem>
 		</CiscoIPPhoneText>`
 	}
-	//<CiscoIPPhoneText>
-	// <Text>This object has one softkey named "Custom"</Text>
-	// 3-31
-	// Cisco Unified IP Phone Services Application Development Notes
-	// OL-28649-01
-	// Chapter 3 CiscoIPPhone XML Objects
-	// XML Considerations
-	// <SoftKeyItem>
-	// <Name>Custom</Name>
-	// <URL>http://someserver/somepage</URL>
-	// <Position>4</Position>
-	// </SoftKeyItem>
-	// </CiscoIPPhoneText>
 
 	/**
 	 *
@@ -82,7 +69,6 @@ export class App {
 	 */
 	static setRootURL(host) {
 		this.rootURL = `http://${host}/app/${this.path}`
-
 	}
 
 }

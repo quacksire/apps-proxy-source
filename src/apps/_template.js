@@ -60,7 +60,7 @@ export class TestApp extends App {
 			default: // 404 Page
 				return this.TextScreen("404", "This page does not exist", [
 					{
-						name: "< back to home",
+						name: "Back",
 						url: `${this.rootURL}`,
 						position: 1
 					}
