@@ -65,7 +65,7 @@ export class TriviaApp extends App {
 						position: 4
 					},
 					{
-						name: "Home",
+						name: "back to app list",
 						url: `http://${metadata.host}`,
 						position: 1
 					}
