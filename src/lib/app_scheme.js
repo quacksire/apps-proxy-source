@@ -100,4 +100,43 @@ Developed by ${this.author}
 		})
 	}
 
+
+	/**
+	 * @name notFound - Generates an CiscoIPPhoneText screen with a 404 error
+	 * @param metadata - The metadata of the request, needed to get the host and the root of the selected app
+	 * @returns {string}
+	 */
+	static notFound(metadata) {
+		return this.TextScreen("404", "This page does not exist", [
+			{
+				name: "Back",
+				url: `${metadata.host}`,
+				position: 1
+			}])
+	}
+
+	/**
+	 * @name appChooserLink - Generates a link to the app chooser
+	 * @param metadata - The metadata of the request, needed to get the host and the root of the selected app
+	 * @returns {string}
+	 */
+	static appChooserLink(metadata) {
+		return `http://${metadata.host}/main.xml`
+	}
+
+	/**
+	 * @name appChooserSoftKey - Generates a softkey to the app chooser
+	 * @param metadata
+	 * @param position
+	 * @returns {{name: string, position, url: string}}
+	 */
+	static appChooserSoftKey(metadata, position = 0) {
+		return {
+			name: "Back",
+			url: this.appChooserLink(metadata),
+			position: position
+		}
+
+	}
+
 }

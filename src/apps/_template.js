@@ -43,14 +43,15 @@ export class TestApp extends App {
 			case `${this.path}`: // Home Page
 				// TODO: #8 Make the app
 
-			/**
-			 * This is the home page of the app, it will be the first page the user sees when they select the app
-			 * Make sure you maintain the indentation, it will make it easier to read and debug
-			 */
+				/**
+				 * This is the home page of the app, it will be the first page the user sees when they select the app
+				 * Make sure you maintain the indentation, it will make it easier to read and debug
+				 */
 
-			/**
-			 * `this.TextScreen` is a function that will generate a CiscoIPPhoneText screen with a title, text, and enables use of soft keys
-			 */
+				/**
+				 * `this.TextScreen` is a function that will generate a CiscoIPPhoneText screen with a title, text, and enables use of soft keys
+				 */
+				return this.TextScreen("Hello World!", "This is an IPPS app running on CF Workers", [this.appChooserSoftKey(metadata.host)])
 
 			// TODO: #8 Optional - Add more pages to your app, need to add a softkey or other type of link to get to/from it
 			case `${this.path}/credits`: // Credits Page
@@ -58,13 +59,7 @@ export class TestApp extends App {
 
 
 			default: // 404 Page
-				return this.TextScreen("404", "This page does not exist", [
-					{
-						name: "Back",
-						url: `${this.rootURL}`,
-						position: 1
-					}
-				])
+				return this.notFound(metadata)
 		}
 	}
 }

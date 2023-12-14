@@ -45,13 +45,7 @@ export class TestApp extends App {
 
 
 			default: // 404 Page
-				return this.TextScreen("404", "This page does not exist", [
-					{
-						name: "Back",
-						url: `${metadata.host}`,
-						position: 1
-					}
-				])
+				return this.notFound(metadata)
 
 
 		}

@@ -164,13 +164,7 @@ export class TriviaApp extends App {
 					return this.TextScreen('Trivia', trivia.question, answersmapsXML)
 				} else {
 					// 404 Page
-					return this.TextScreen("404", "This page does not exist", [
-						{
-							name: "Back",
-							url: `${metadata.host}`,
-							position: 1
-						}
-					])
+					return this.notFound(metadata)
 				}
 		}
 	}
