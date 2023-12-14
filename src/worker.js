@@ -131,7 +131,7 @@ async function getMainXML(hostname) {
       <Prompt></Prompt>
       <MenuItem>
 				<Name>Test</Name>
-				<URL>http://${hostname}/app/test.xml</URL>
+				<URL>http://${hostname}/app/test</URL>
 				<IconIndex>1</IconIndex>
     	</MenuItem>
 			<MenuItem>

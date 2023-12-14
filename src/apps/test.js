@@ -30,11 +30,6 @@ export class TestApp extends App {
 			case `${this.path}`: // Home Page
 				return this.TextScreen("TestApp", `This is a test app. Your ${metadata.cucmPhone} is pretty goofy`, [
 					{
-						name: "Credits",
-						url: `${this.rootURL}/credits`,
-						position: 4
-					},
-					{
 						name: "back to app list",
 						url: `${metadata.host}`,
 						position: 1
