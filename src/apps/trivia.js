@@ -87,6 +87,11 @@ export default async function TriviaApp(url, metadata) {
 					<Name>Hard</Name>
 					<URL>http://${metadata.host}/app/trivia/game/hard</URL>
 				</MenuItem>
+				<SoftKeyItem>
+					<Name>Credits</Name>
+					<URL>http://${metadata.host}/app/trivia/credits</URL>
+					<Position>1</Position>
+				</SoftKeyItem>
 		</CiscoIPPhoneMenu>
 		`;
 	}
