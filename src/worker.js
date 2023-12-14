@@ -22,10 +22,10 @@
 
 
 
-import { default as TriviaApp } from '../src/apps/trivia'
 
 // TODO: #9 - Import your app here
 import { TestApp } from './apps/test'
+import { TriviaApp } from './apps/trivia'
 export default {
 	async fetch(request, env, ctx) {
 		const { pathname, host } = new URL(request.url);
@@ -51,9 +51,13 @@ export default {
 				appRes = await TestApp.app(appDir, metadata)
 			}
 
-			if (appDir.startsWith('trivia')) {
-				appRes = await TriviaApp(pathname.split('/trivia/')[1], metadata)
+			if (appDir.startsWith(TriviaApp.path)) {
+				appRes = await TriviaApp.app(appDir, metadata)
 			}
+
+			//if (appDir.startsWith('trivia')) {
+			//	appRes = await TriviaApp(pathname.split('/trivia/')[1], metadata)
+			//}
 
 
 			return new Response(appRes, { headers: { 'Content-Type': 'text/xml' } });

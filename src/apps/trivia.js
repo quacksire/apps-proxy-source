@@ -74,7 +74,12 @@ export class TriviaApp extends App {
 			/**
 			 * `this.TextScreen` is a function that will generate a CiscoIPPhoneText screen with a title, text, and enables use of soft keys
 			 */
-			case url.includes('/game/'): // Credits Page
+			case url.includes('/game/'): // Game Pages
+				/**
+				* /app/trivia/game/[difficulty] - question
+				* /app/trivia/game/[difficulty]/correct - correct answer screen with continue button and back to main menu button
+				* /app/trivia/game/[difficulty]/incorrect?correct_answer=[answer] - incorrect answer screen with correct answer and back to main menu button
+				 */
 				let difficulty = url.split('game/')[1].split('/')[0]
 				console.log(difficulty)
 
@@ -121,6 +126,17 @@ export class TriviaApp extends App {
 				let triviaURL = `https://opentdb.com/api.php?amount=1&category=18&type=multiple`
 				let triviaResponse = await fetch(triviaURL)
 				let trivia = (await triviaResponse.json()).results[0]
+				/**
+				 * Object {
+				 *   type: string,
+				 *   difficulty: string,
+				 *   category: string,
+				 *   question: string,
+				 *   correct_answer: string
+				 *   incorrect_answers: Array [String]
+				 * }
+				 */
+
 
 				let positions = [1, 2, 3, 4]
 				// shuffle positions in a random order
@@ -161,71 +177,4 @@ export class TriviaApp extends App {
 				])
 		}
 	}
-}
-
-
-
-
-export default async function TriviaApp(url, metadata) {
-	if (!url) url = "/"
-	const rootURL = `http://${metadata.host}/app/trivia/`
-	const name = "Trivia"
-	const description = "Test your knowledge with this trivia app."
-	// url = App URL
-	// metadata.url =  Full URL
-	//
-	/*
-	* let metadata = {
-		url: url,
-		host: queryParameters.get("host") || "apps-proxy-source.quacksire.workers.dev",
-		cucmPhone: queryParameters.get("x-ciscoipphonemodelname") || "N/A"
-	}
-	*
-	*
-
-	console.log(url, metadata)
-
-
-	function showCredits() {
-		return `
-		<CiscoIPPhoneText>
-			<Title>${name}</Title>
-			<Text>
-				${description}
-				Developed by Quacksire (sam@quacksire.dev)
-			</Text>
-		</CiscoIPPhoneText>`
-	}
-
-
-	}
-
-	/*
-	* /app/trivia/game/[difficulty] - question
-	* /app/trivia/game/[difficulty]/correct - correct answer screen with continue button and back to main menu button
-	* /app/trivia/game/[difficulty]/incorrect?correct_answer=[answer] - incorrect answer screen with correct answer and back to main menu button
-	 */
-
-
-	/**
-	 * Object {
-	 *   type: string,
-	 *   difficulty: string,
-	 *   category: string,
-	 *   question: string,
-	 *   correct_answer: string
-	 *   incorrect_answers: Array [String]
-	 * }
-	 */
-
-
-	if (url.startsWith('game')) {
-
-	}
-
-	//
-
-
-
-
 }
