@@ -25,6 +25,7 @@ export class App {
 			<CiscoIPPhoneText>
 			<Title>${title}</Title>
 			<Text> ${text} </Text>
+			<Prompt>${title}</Prompt>
 			${keys.length >= 0 && keys.map(key => {
 			return `
 			<SoftKeyItem>
