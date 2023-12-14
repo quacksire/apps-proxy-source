@@ -29,9 +29,13 @@ export class TestApp extends App {
 
 			case `${this.path}`: // Home Page
 				return this.TextScreen("TestApp", `This is a test app. Your ${metadata.cucmPhone} is pretty goofy`, [
-					this.appChooserSoftKey(metadata.host),
 					{
-						name: "Credits",
+						name: "back to app list",
+						url: `http://${metadata.host}/main.xml`,
+						position: 1
+					},
+					{
+						name: "credits",
 						url: `${this.rootURL}/credits`,
 						position: 4
 					}
