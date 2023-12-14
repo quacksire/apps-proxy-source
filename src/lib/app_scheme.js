@@ -23,8 +23,8 @@ export class App {
 	static TextScreen(title, text, keys = []) {
 		return `
 		<CiscoIPPhoneText>
-			<Title>${this.name}</Title>
-			<Prompt>${title}</Prompt>
+			<Title>${title}</Title>
+			<Prompt></Prompt>
 			<Text>
 				${text}
 			</Text>
@@ -51,8 +51,9 @@ export class App {
 		return `
 		<CiscoIPPhoneText>
 			<Title>${this.name}</Title>
-			<Prompt>Credits</Prompt>
 			<Text>
+				Credits\n
+				--------\n
 				${this.description} v${this.version}\n
 				Developed by ${this.author}
 			</Text>
@@ -63,6 +64,19 @@ export class App {
 			</SoftKeyItem>
 		</CiscoIPPhoneText>`
 	}
+	//<CiscoIPPhoneText>
+	// <Text>This object has one softkey named "Custom"</Text>
+	// 3-31
+	// Cisco Unified IP Phone Services Application Development Notes
+	// OL-28649-01
+	// Chapter 3 CiscoIPPhone XML Objects
+	// XML Considerations
+	// <SoftKeyItem>
+	// <Name>Custom</Name>
+	// <URL>http://someserver/somepage</URL>
+	// <Position>4</Position>
+	// </SoftKeyItem>
+	// </CiscoIPPhoneText>
 
 	/**
 	 *

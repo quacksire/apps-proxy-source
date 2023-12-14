@@ -28,6 +28,17 @@ export class TestApp extends App {
 
 
 			case `${this.path}`: // Home Page
+				return `
+				<CiscoIPPhoneText>
+				<Text>This object has one softkey named "Custom"</Text>
+				<SoftKeyItem>
+				<Name>Custom</Name>
+				<URL>http://someserver/somepage</URL>
+				<Position>4</Position>
+				</SoftKeyItem>
+				</CiscoIPPhoneText>
+				`
+
 				return this.TextScreen("TestApp", `This is a test app. Your ${metadata.cucmPhone} is pretty goofy`, [
 					{
 						name: "Credits",
