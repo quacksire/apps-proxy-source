@@ -52,13 +52,6 @@ export class TestApp extends App {
 
 
 			default: // 404 Page
-				console.log(this.TextScreen("404", "This page does not exist", [
-					{
-						name: "back",
-						url: `${this.rootURL}`,
-						position: 1
-					}
-				]))
 				return this.TextScreen("404", "This page does not exist", [
 					{
 						name: "back",
