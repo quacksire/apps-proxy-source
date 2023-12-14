@@ -31,8 +31,13 @@ export class TestApp extends App {
 				return this.TextScreen("TestApp", `This is a test app. Your ${metadata.cucmPhone} is pretty goofy`, [
 					{
 						name: "back to app list",
-						url: `${metadata.host}`,
+						url: `http://${metadata.host}`,
 						position: 1
+					},
+					{
+						name: "credits",
+						url: `${this.rootURL}/credits`,
+						position: 2
 					}
 				])
 
