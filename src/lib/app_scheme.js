@@ -74,8 +74,8 @@ export class App {
 <CiscoIPPhoneText>
 <Title>Credits</Title>
 <Text>
---------\n
-${this.description} v${this.version}\n
+${this.name} version ${this.version}\n
+${this.description}\n
 Developed by ${this.author}
 </Text>
 <SoftKeyItem>
