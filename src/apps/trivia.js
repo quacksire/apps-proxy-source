@@ -161,7 +161,10 @@ export class TriviaApp extends App {
 							position: `${positions[index]}`
 						}
 					})
-					return this.TextScreen('Trivia', trivia.question, answersmapsXML)
+					// capitalize the first letter of the difficulty
+					let difficultyCapitalized = difficulty.charAt(0).toUpperCase() + difficulty.slice(1)
+
+					return this.TextScreen(`${difficultyCapitalized} Question`, trivia.question, answersmapsXML)
 				} else {
 					// 404 Page
 					return this.notFound(metadata)

@@ -3,20 +3,20 @@ import {App} from "../lib/app_scheme";
 // TODO: #1 Duplicate this file and name it something memorable
 
 //TODO: #2 Change `TestApp` to what the app is called, like `TriviaApp` or `MapApp`
-export class TestApp extends App {
+export class TemplateApp extends App {
 	// Now we can set the app metadata
 
 
 	//TODO: #3 Change this to the user facing name of your app
-	static name = "TestApp"
+	static name = "TemplateApp"
 	// TODO: #4 Change this to the description of your app
-	static description = "This is a test app"
+	static description = "This is a template app"
 	// TODO: #5 Change this to the version of your app
 	static version = "1.0"
 	// TODO: #6 Change this to the author of your app
 	static author = "Quacksire"
 	// TODO: #7 Change this to the path of your app, like `trivia` or `map`
-	static path = "test"
+	static path = "template"
 
 	// <no-touchy>
 	rootURL = ''
@@ -51,7 +51,18 @@ export class TestApp extends App {
 				/**
 				 * `this.TextScreen` is a function that will generate a CiscoIPPhoneText screen with a title, text, and enables use of soft keys
 				 */
-				return this.TextScreen("Hello World!", "This is an IPPS app running on CF Workers", [this.appChooserSoftKey(metadata.host)])
+				return this.TextScreen("App Template", `This is a template you can use to make your own Cisco IPPS\n\nSee https://ducks.win/ipps-template on how to make your own`, [
+					{
+						name: "back to app list",
+						url: `http://${metadata.host}/main.xml`,
+						position: 1
+					},
+					{
+						name: "credits",
+						url: `${this.rootURL}/credits`,
+						position: 4
+					}
+				])
 
 			// TODO: #8 Optional - Add more pages to your app, need to add a softkey or other type of link to get to/from it
 			case `${this.path}/credits`: // Credits Page
@@ -64,5 +75,5 @@ export class TestApp extends App {
 	}
 }
 // TODO: #9 Import your app in src/worker.js
-// TODO: #10 Add the desired path of the app to the conditional on line #46, following the standard that is already set
-// TODO: #11 profit?
+// TODO: #10 Add your app to the array
+// TODO: #11 Submit a PR

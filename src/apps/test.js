@@ -28,11 +28,16 @@ export class TestApp extends App {
 
 
 			case `${this.path}`: // Home Page
-				return this.TextScreen("TestApp", `This is a test app. Your ${metadata.cucmPhone} is pretty goofy`, [
+				return this.TextScreen("This is a test app.", `Your ${metadata.cucmPhone} is pretty goofy`, [
 					{
 						name: "back to app list",
 						url: `http://${metadata.host}/main.xml`,
 						position: 1
+					},
+					{
+						name: "image",
+						url: `${this.rootURL}/image`,
+						position: 3
 					},
 					{
 						name: "credits",
@@ -42,7 +47,14 @@ export class TestApp extends App {
 				])
 			case `${this.path}/credits`: // Credits Page
 				return this.showCredits(this.rootURL)
-
+			case `${this.path}/image`:
+				return `<CiscoIPPhoneImageFile WindowMode="Wide">
+<Title>Image File Object</Title>
+<Prompt>Image File Object</Prompt>
+<LocationX>319</LocationX>
+<LocationY>0</LocationY>
+<URL>http://cwwp2.dot.ca.gov/documentation/district-map-edited-2019.png</URL>
+</CiscoIPPhoneImageFile>`
 
 			default: // 404 Page
 				return this.notFound(metadata)

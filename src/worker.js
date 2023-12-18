@@ -26,6 +26,15 @@
 // TODO: #9 - Import your app here
 import { TestApp } from './apps/test'
 import { TriviaApp } from './apps/trivia'
+import { TemplateApp } from './apps/_template';
+
+// TODO: #10 - Add your app to the array
+const apps = [
+	TemplateApp,
+	TestApp,
+	TriviaApp
+]
+
 export default {
 	async fetch(request, env, ctx) {
 		const { pathname, host } = new URL(request.url);
@@ -45,19 +54,11 @@ export default {
 
 			// appDir.startsWith("appName")
 
-
-			// TODO: #10 - Copy this conditional, and change it with what you made. IDEs like VSCode will aid you with intelliSense
-			if (appDir.startsWith(TestApp.path)) {
-				appRes = await TestApp.app(appDir, metadata)
-			}
-
-			if (appDir.startsWith(TriviaApp.path)) {
-				appRes = await TriviaApp.app(appDir, metadata)
-			}
-
-			//if (appDir.startsWith('trivia')) {
-			//	appRes = await TriviaApp(pathname.split('/trivia/')[1], metadata)
-			//}
+			await apps.forEach(async (app) => {
+				if (appDir.startsWith(app.path)) {
+					appRes = await app.app(appDir, metadata)
+				}
+			})
 
 
 			return new Response(appRes, { headers: { 'Content-Type': 'text/xml' } });
@@ -129,20 +130,19 @@ export default {
 };
 
 async function getMainXML(hostname) {
+	let items = apps.map((app, index) => {
+		return `
+		<MenuItem>
+			<Name>${app.name}</Name>
+			<URL>http://${hostname}/app/${app.path}</URL>
+			<IconIndex>${index}</IconIndex>
+		</MenuItem>`
+	})
 	return `
     <CiscoIPPhoneMenu>
       <Title>Apps</Title>
       <Prompt></Prompt>
-      <MenuItem>
-				<Name>Test</Name>
-				<URL>http://${hostname}/app/test</URL>
-				<IconIndex>1</IconIndex>
-    	</MenuItem>
-			<MenuItem>
-				<Name>Trivia</Name>
-				<URL>http://${hostname}/app/trivia</URL>
-				<IconIndex>2</IconIndex>
-			</MenuItem>
+      ${items.join('')}
     </CiscoIPPhoneMenu>
   `;
 }

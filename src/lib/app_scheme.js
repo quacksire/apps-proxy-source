@@ -70,20 +70,17 @@ export class App {
 	 * @returns {string}
 	 */
 	static showCredits(rootURL) {
-		return `
-<CiscoIPPhoneText>
-<Title>Credits</Title>
-<Text>
-${this.name} version ${this.version}\n
-${this.description}\n
-Developed by ${this.author}
-</Text>
-<SoftKeyItem>
-<Name>Back</Name>
-<URL>${rootURL}</URL>
-<Position>1</Position>
-</SoftKeyItem>
-</CiscoIPPhoneText>`
+
+		return this.TextScreen(
+			"Credits",
+			`Developed by ${this.author}\nVersion ${this.version}\n${this.description}`,
+			[
+				{
+					name: "Back",
+					url: `${rootURL}`,
+					position: 1
+				}
+			])
 	}
 
 	/**
