@@ -143,6 +143,11 @@ async function getMainXML(hostname) {
       <Title>Apps</Title>
       <Prompt></Prompt>
       ${items.join('')}
+      <SoftKeyItem>
+				<Name>Close</Name>
+				<URL>Init:Services</URL>
+				<Position>1</Position>
+				</SoftKeyItem>
     </CiscoIPPhoneMenu>
   `;
 }

@@ -127,7 +127,7 @@ export class TriviaApp extends App {
 					}
 
 
-					await this.waitforme(1000)
+					//await this.waitforme(1000)
 
 					let triviaURL = `https://opentdb.com/api.php?amount=1&category=18&type=multiple`
 					let triviaResponse = await fetch(triviaURL)

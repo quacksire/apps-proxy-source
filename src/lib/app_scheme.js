@@ -136,4 +136,19 @@ export class App {
 
 	}
 
+	/**
+	 * @name appQuitSoftKey - Generates a softkey to terminate the app
+	 * @param metadata - The metadata of the request, needed to get the host and the root of the selected app
+	 * @param position - The position of the softkey
+	 * @returns {{name: string, position: number, url: string}}
+	 */
+	static appQuitSoftKey(metadata, position = 0) {
+		return {
+			name: "Back",
+			url: "Init:Services",
+			position: position
+		}
+
+	}
+
 }
