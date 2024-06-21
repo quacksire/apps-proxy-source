@@ -42,7 +42,7 @@ export class App {
 	static MenuScreen(prompt, title, items = [], softkeys = []) {
 		return `
 		<CiscoIPPhoneMenu>
-			<Title>Trivia</Title>
+			<Title>${prompt}</Title>
 			<Prompt>${title}</Prompt>
 			${items.length >= 0 && items.map(item => {
 			return `
